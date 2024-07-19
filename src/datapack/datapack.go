@@ -1,18 +1,15 @@
 package datapack
 
-type DataPack struct {
-	Size int   `json:"Size"`
-	Data []any `json:"Data"`
+type DataPack[T any] struct {
+	Size int `json:"Size"`
+	Data []T `json:"Data"`
 }
 
-// CreateNew has the same effect as: DataPack{}.
-// It is a more fool-proof way to create a DataPack.
-func CreateNew() *DataPack {
-	return &DataPack{}
+func CreateNew[T any]() *DataPack[T] {
+	return &DataPack[T]{}
 }
 
-// AddData adds data to the TypeDataPack Data slice.
-func (dp *DataPack) AddData(data ...any) {
+func (dp *DataPack[T]) AddData(data ...T) {
 	dp.Data = append(dp.Data, data...)
 	dp.Size = len(dp.Data)
 }

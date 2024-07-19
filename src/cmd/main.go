@@ -7,15 +7,13 @@ import (
 )
 
 func main() {
-	c := client.CreateNew()
+	c := client.CreateNew[int]()
 
-	dp := datapack.CreateNew()
-
-	for i := range 10 {
-		dp.AddData(i)
-	}
-
+	dp := datapack.CreateNew[int]()
+	dp.AddData(1, 2, 3)
 	c.AddDataPack("192.168.0.1:8080", dp)
+
+	c.AddData("192.168.0.1:8080", 4, 5, 6)
 
 	for k, v := range c.Packages {
 		fmt.Printf("Key: %v --- Values: %v\n", k, v)
