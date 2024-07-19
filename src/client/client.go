@@ -2,8 +2,9 @@ package client
 
 import "TheJ0lly/DDM/src/datapack"
 
-// Client is used as a sender of data
-// Recommended to use the CreateNew() method or manually instantiate the Packages map.
+// Client is used as a sender of data.
+//
+// Recommended to use the CreateNew() method.
 type Client[T any] struct {
 
 	// Packages is the map of what data to send where.
@@ -12,17 +13,22 @@ type Client[T any] struct {
 	Packages map[string]*datapack.DataPack[T]
 }
 
-// CreateNew has the same effect as: Client{Packages: make(map[string][]client.Package)}.
-// It is a more fool-proof way to create a Client.
-func CreateNew[T any]() *Client[T] {
+// CreateTyped creates a new Client struct with the type in brackets. This method is recommended over manual instantiation.
+//
+// It is equivalent to &Client[T]{Packages: make(map[string]*datapack.DataPack[T])}.
+func CreateTyped[T any]() *Client[T] {
 	return &Client[T]{Packages: make(map[string]*datapack.DataPack[T])}
+}
+
+func CreateGeneric() *Client[any] {
+	return &Client[any]{Packages: make(map[string]*datapack.DataPack[any])}
 }
 
 func (c *Client[T]) AddData(dest string, data ...T) {
 	if val, ok := c.Packages[dest]; ok {
 		val.AddData(data...)
 	} else {
-		dp := datapack.CreateNew[T]()
+		dp := datapack.CreateTyped[T]()
 		c.Packages[dest] = dp
 	}
 }

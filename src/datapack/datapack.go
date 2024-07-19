@@ -5,8 +5,12 @@ type DataPack[T any] struct {
 	Data []T `json:"Data"`
 }
 
-func CreateNew[T any]() *DataPack[T] {
+func CreateTyped[T any]() *DataPack[T] {
 	return &DataPack[T]{}
+}
+
+func CreateGeneric() *DataPack[any] {
+	return &DataPack[any]{}
 }
 
 func (dp *DataPack[T]) AddData(data ...T) {

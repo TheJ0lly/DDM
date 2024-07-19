@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	c := client.CreateNew[int]()
+	c := client.CreateTyped[int]()
 
-	dp := datapack.CreateNew[int]()
+	dp := datapack.CreateTyped[int]()
 	dp.AddData(1, 2, 3)
 	c.AddDataPack("192.168.0.1:8080", dp)
 
