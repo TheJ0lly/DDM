@@ -23,16 +23,16 @@ type Address struct {
 }
 
 // CreateNew creates a new Address. The IP and port are checked to be valid.
-func CreateNew(ip string, port int) (*Address, error) {
+func CreateNew(ip string, port int) (Address, error) {
 
 	if port < minPortNum || port > maxPortNum {
-		return nil, fmt.Errorf("port number is out of range: %d", port)
+		return Address{}, fmt.Errorf("port number is out of range: %d", port)
 	}
 
 	addr, err := netip.ParseAddr(ip)
 
 	if err != nil {
-		return nil, err
+		return Address{}, err
 	}
 
 	toRet := Address{IP: ip, Port: port}
@@ -43,7 +43,7 @@ func CreateNew(ip string, port int) (*Address, error) {
 		toRet.Version = Version6
 	}
 
-	return &toRet, nil
+	return toRet, nil
 }
 
 // Is4 checks if the IP is IPv4.
