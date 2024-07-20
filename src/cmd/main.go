@@ -33,7 +33,7 @@ func main() {
 	dp2.AddData("Hello", "World", "From", "DDM")
 	c.AddDataPack(a2, dp2)
 
-	for k, v := range c.GetPackagesMap() {
+	for k, v := range c.Packages {
 		fmt.Printf("Key: %v --- Values: %v\n", k, v)
 	}
 }

@@ -9,15 +9,15 @@ type DataPack[T any] struct {
 // CreateTyped creates a new DataPack with the type in brackets. This method is recommended over manual instantiation.
 //
 // It is equivalent to &DataPack[T]{}.
-func CreateTyped[T any]() DataPack[T] {
-	return DataPack[T]{}
+func CreateTyped[T any]() *DataPack[T] {
+	return &DataPack[T]{}
 }
 
 // CreateGeneric creates a new DataPack with no specific type. This method is recommended over manual instantiation.
 //
 // It is equivalent to &DataPack[any]{}.
-func CreateGeneric() DataPack[any] {
-	return DataPack[any]{}
+func CreateGeneric() *DataPack[any] {
+	return &DataPack[any]{}
 }
 
 // AddData adds data of a certain type to the DataPack.
