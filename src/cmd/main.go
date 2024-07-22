@@ -1,39 +1,45 @@
 package main
 
 import (
-	"TheJ0lly/DDM/src/address"
-	"TheJ0lly/DDM/src/client"
-	"TheJ0lly/DDM/src/datapack"
 	"fmt"
+
+	"TheJ0lly/DDM/src/address"
+	"TheJ0lly/DDM/src/datapack"
+	"TheJ0lly/DDM/src/router"
 )
 
 func main() {
-	c := client.CreateGeneric()
+	r := router.Create()
 
-	a, err := address.CreateNew("192.168.0.1", 8080)
+	// addr, err := address.CreateNew("0.0.0.0", 8080)
+
+	// if err != nil {
+	// 	fmt.Printf("ERROR: %s\n", err)
+	// 	return
+	// }
+
+	// dp := datapack.Create()
+	// dp.AddData(1, 2, 3, 4, 5)
+
+	// r.AddPair(addr, dp)
+
+	addr2, err := address.CreateNew("0.0.0.0", 6969)
 
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		fmt.Printf("ERROR: %s\n", err)
 		return
 	}
 
-	a2, err := address.CreateNew("192.168.0.2", 6969)
+	dp2 := datapack.Create()
+	dp2.AddData(7, 9, 9, 11)
+
+	r.AddPair(addr2, dp2)
+
+	err = r.Send()
 
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		fmt.Printf("ERROR: %s\n", err)
 		return
 	}
 
-	dp := datapack.CreateGeneric()
-	dp.AddData(1, 2, 3)
-	c.AddDataPack(a, dp)
-	c.AddData(a, 4, 5, 6)
-
-	dp2 := datapack.CreateGeneric()
-	dp2.AddData("Hello", "World", "From", "DDM")
-	c.AddDataPack(a2, dp2)
-
-	for k, v := range c.Packages {
-		fmt.Printf("Key: %v --- Values: %v\n", k, v)
-	}
 }

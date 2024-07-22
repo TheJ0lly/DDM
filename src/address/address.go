@@ -11,8 +11,8 @@ const (
 	maxPortNum = 65535
 	minPortNum = 0
 
-	Version4 VersionNumber = iota
-	Version6
+	Version4 VersionNumber = 4
+	Version6 VersionNumber = 6
 )
 
 // Address is a struct which better represents the structure of an IP address.
@@ -54,4 +54,12 @@ func (a *Address) Is4() bool {
 // Is6 checks if the IP is IPv6.
 func (a *Address) Is6() bool {
 	return a.Version == Version6
+}
+
+func (a *Address) String() string {
+	if a.Is4() {
+		return fmt.Sprintf("%s:%d", a.IP, a.Port)
+	}
+
+	return fmt.Sprintf("[%s]:%d", a.IP, a.Port)
 }

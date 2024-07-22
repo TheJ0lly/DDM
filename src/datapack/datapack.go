@@ -1,27 +1,32 @@
 package datapack
 
-// DataPack is a struct that holds the data that is being prepared to be sent over the network.
-type DataPack[T any] struct {
-	Size int `json:"Size"`
-	Data []T `json:"Data"`
+import "encoding/json"
+
+// DataPack is a struct that holds the data as an int that is being prepared to be sent over the network.
+type DataPack struct {
+	Size int   `json:"Size"`
+	Data []int `json:"Data"`
 }
 
-// CreateTyped creates a new DataPack with the type in brackets. This method is recommended over manual instantiation.
-//
-// It is equivalent to &DataPack[T]{}.
-func CreateTyped[T any]() *DataPack[T] {
-	return &DataPack[T]{}
-}
-
-// CreateGeneric creates a new DataPack with no specific type. This method is recommended over manual instantiation.
-//
-// It is equivalent to &DataPack[any]{}.
-func CreateGeneric() *DataPack[any] {
-	return &DataPack[any]{}
+// Create creates a new DataPack. This method is recommended over manual instantiation.
+func Create() *DataPack {
+	return &DataPack{}
 }
 
 // AddData adds data of a certain type to the DataPack.
-func (dp *DataPack[T]) AddData(data ...T) {
+func (dp *DataPack) AddData(data ...int) {
 	dp.Data = append(dp.Data, data...)
 	dp.Size = len(dp.Data)
+}
+
+func (dp *DataPack) ToJson() ([]byte, error) {
+	return json.Marshal(dp)
+}
+
+func FromJson(b []byte) (*DataPack, error) {
+	var dp DataPack
+	err := json.Unmarshal(b, &dp)
+
+	return &dp, err
+
 }
